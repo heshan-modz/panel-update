@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trigger C# Button Click (SignalR)</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/3.1.0/signalr.js"></script>
+    <script>
+        const connection = new signalR.HubConnectionBuilder()
+            .withUrl("http://192.168.250.35:5000/buttonClickHub")  // Update with your C# server's IP and port
+            .build();
+
+        async function triggerButtonClick() {
+            try {
+                await connection.invoke("TriggerButtonClick");
+                alert("Button Clicked!");
+            } catch (err) {
+                console.error(err);
+            }
+        }
+
+        connection.start().catch(err => console.error('SignalR connection error: ' + err));
+    </script>
+</head>
+<body>
+    <h2>Click the button to trigger C# button click!</h2>
+    <button onclick="triggerButtonClick()">Click to Trigger C# Button</button>
+</body>
+</html>
